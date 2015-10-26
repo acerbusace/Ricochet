@@ -220,7 +220,7 @@ setInterval(function (){
 
     for (var i in person){
         for (var j in bullet){
-            if (Math.sqrt(Math.pow(bullet[j].x - person[i].x, 2) + Math.pow(bullet[j].y - person[i].y, 2)) < person[i].size){
+            if (Math.sqrt(Math.pow(bullet[j].x - person[i].x, 2) + Math.pow(bullet[j].y - person[i].y, 2)) < person[i].size + bullet[j].size){
                 console.log("Person Hit");
 
                 bullet.splice(j, 1);

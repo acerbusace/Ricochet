@@ -1,19 +1,34 @@
+<!DOCTYPE html>
 <html>
     <head> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Collabrative App!</title>
+        <title>Ricochet!</title>
         <script src="scripts/jquery-1.11.3.js"></script>
         <script src="/socket.io/socket.io.js"></script>
    <style> 
          body {
-            background: #dddddd;
+            background: #1A1A1A;
+         }
+
+         h1 {
+             text-align:center;
+         }
+         h2 {
+            text-align:center;
+         }
+         li {
+            text-align:center;
+         }
+         .inputs{
+            text-align:center;
          }
 		 
 		 /*element selectors: */
 		 canvas {
-		    margin: 20px;
 			/*important here for padding to be 0 for mouse calculations */
             padding: 0px; 
+            margin: auto;
+            display: block;
 		 }
 		 /* class selectors: */
 		 .canvas {            
@@ -28,15 +43,26 @@
 		  
  
       </style>
-
     </head>
-   
+    
     <body>
+        <h1 style="color:yellow">
+            Welcome to Ricochet! <hr>
+        </h1>
+
         <canvas id="myCanvas" class='canvas' width="1600" height="800">
         </canvas> <br />
-        <input type="text" id="name" name="name" value="Nickname" size="60">
-        <input type="text" id="controlName" name="controlName" value="Control Variable Name" size="60">
-        <input type="button" value="Assign Control" onClick="handleAssignButton()">
+        <div class ="inputs">
+            <input type="text" id="name" name="name" value="Nickname" size="60">
+            <input type="text" id="controlName" name="controlName" value="Control Variable Name" size="60">
+            <input type="button" value="Assign Control" onClick="handleAssignButton()"> <hr>
+        </div>
+        <h2 style="color:white">
+            Controls
+        </h2>
+        <li style="color:white">Nickname: Enter the name you want others to see</li>
+        <li style="color:white">Control Variable Names: <span style="color:red">red</span>, <span style="color:green">green</span>, <span style="color:blue">blue</span></li>
+        <li style="color:white">To control one of the circles, type their corresponding variable name into the text field labeled "Control Variable Name"</li>
         <script src="Polling_Canvas.js"></script>
     </body>
 </html>

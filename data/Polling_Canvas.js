@@ -101,8 +101,8 @@ function mouseUp(e){                                              // stops myWor
     for (var i in person){
         if (io.id == person[i].id){
             bullet.push({x: person[i].x, y: person[i].y, speedX: bulletSS*bulletSpeed*(mouseX - person[i].x)/(Math.sqrt(Math.pow(mouseX - person[i].x, 2) + Math.pow(mouseY - person[i].y, 2))), speedY: bulletSS*bulletSpeed*(mouseY - person[i].y)/(Math.sqrt(Math.pow(mouseX - person[i].x, 2) + Math.pow(mouseY - person[i].y, 2))), size: bulletS*5});
-            bullet[bullet.length-1].x += bullet[bullet.length-1].speedX*person[i].size/(Math.sqrt(Math.pow(bullet[bullet.length-1].speedX, 2) + Math.pow(bullet[bullet.length-1].speedY, 2)));
-            bullet[bullet.length-1].y += bullet[bullet.length-1].speedY*person[i].size/(Math.sqrt(Math.pow(bullet[bullet.length-1].speedX, 2) + Math.pow(bullet[bullet.length-1].speedY, 2)));
+            bullet[bullet.length-1].x += bullet[bullet.length-1].speedX*(person[i].size + bullet[bullet.length-1].size)/(Math.sqrt(Math.pow(bullet[bullet.length-1].speedX, 2) + Math.pow(bullet[bullet.length-1].speedY, 2)));
+            bullet[bullet.length-1].y += bullet[bullet.length-1].speedY*(person[i].size + bullet[bullet.length-1].size)/(Math.sqrt(Math.pow(bullet[bullet.length-1].speedX, 2) + Math.pow(bullet[bullet.length-1].speedY, 2)));
             io.emit("requestBulletPositionUpdate", JSON.stringify({arr: bullet}));
         }
     }
@@ -115,32 +115,32 @@ function mouseUp(e){                                              // stops myWor
 }
 
 function keyDown(e){
-    if (e.keyCode == 38){
+    if (e.keyCode == 87){
         up = true;
     } 
-    if (e.keyCode == 40){
+    if (e.keyCode == 83){
         down = true;
     } 
-    if (e.keyCode == 37){
+    if (e.keyCode == 65){
         left = true;
     }
-    if (e.keyCode == 39){
+    if (e.keyCode == 68){
         right = true;
     }
 
 }
 
 function keyUp(e){                                               // as long as no keys are clicked, draw same frame again and again 
-    if (e.keyCode == 38){
+    if (e.keyCode == 87){
         up = false;
     } 
-    if (e.keyCode == 40){
+    if (e.keyCode == 83){
         down = false;
     } 
-    if (e.keyCode == 37){
+    if (e.keyCode == 65){
         left = false;
     }
-    if (e.keyCode == 39){
+    if (e.keyCode == 68){
         right = false;
     }
 }
@@ -170,6 +170,15 @@ function draw(){                                                     // the func
     context.fillText(mouseX + ", " + mouseY, 0, fontSize);
     context.fillText(str, 0, fontSize*2);
 
+    for (var i in blocks){
+        context.rect(blocks[i].x, blocks[i].y, blocks[i].width, blocks[i].height);
+        context.fillStyle = 'rgb(96,96,96)';
+        context.fill();
+        context.lineWidth = 3;
+        context.strokeStyle = 'rgb(0,0,0)';
+        context.stroke(); 
+    }
+
     for (var i in person){
         context.beginPath();
         context.arc(person[i].x, person[i].y, person[i].size, 0, Math.PI*2, true); 
@@ -186,15 +195,6 @@ function draw(){                                                     // the func
         context.strokeStyle = 'rgb(0,0,0)';
         context.stroke();
         context.fillText(person[i].name, person[i].x - context.measureText(person[i].name).width/2, person[i].y - person[i].size - fontSize);  
-    }
-
-    for (var i in blocks){
-        context.rect(blocks[i].x, blocks[i].y, blocks[i].width, blocks[i].height);
-        context.fillStyle = 'rgb(96,96,96)';
-        context.fill();
-        context.lineWidth = 3;
-        context.strokeStyle = 'rgb(0,0,0)';
-        context.stroke(); 
     }
 
     for (var i in bullet){
