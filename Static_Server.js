@@ -77,7 +77,8 @@ var server = http.createServer(function(request, response){ // Craetes the serve
     }
 
 });                                            // listens for user requests at port 3000
-server.listen(3000);
+var port = Number(process.env.PORT || 3000);
+server.listen(port);
 
 //io.serveClient(true);
 io.attach(server);

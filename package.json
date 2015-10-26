@@ -1,8 +1,23 @@
 {
   "name": "dependencies",
-  "version": "0.0.1",
-  "description": "Modules Required for Application",    
+  "version": "1.0.0",
+  "description": "",
+  "main": "Static_Server.js",
   "dependencies": {
-    "socket.io": "~1.3.7"
-  }
+    "socket.io": "^1.3.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acerbusace/Ricochet.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/acerbusace/Ricochet/issues"
+  },
+  "homepage": "https://github.com/acerbusace/Ricochet#readme"
 }
