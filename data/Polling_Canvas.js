@@ -31,7 +31,7 @@ $(document).ready(function () {
         blocks = dataObj.arrThree;
     });
 
-    bulletSpeed = 5;
+    bulletSpeed = 3;
     bulletS = 1;
     bulletSS = 1;
     str = "nothing";
@@ -82,7 +82,7 @@ $(document).ready(function () {
                     }
                 }
 
-                for (var j in blocks){
+                /*for (var j in blocks){
                     if ((person[i].x - person[i].size > blocks[j].x && person[i].x - person[i].size < blocks[j].x + blocks[j].width && person[i].y - person[i].size > blocks[j].y && person[i].y - person[i].size < blocks[j].y + blocks[j].height) || (person[i].x + person[i].size > blocks[j].x && person[i].x + person[i].size < blocks[j].x + blocks[j].width && person[i].y - person[i].size > blocks[j].y && person[i].y - person[i].size < blocks[j].y + blocks[j].height) || (person[i].x - person[i].size > blocks[j].x && person[i].x - person[i].size < blocks[j].x + blocks[j].width && person[i].y + person[i].size > blocks[j].y && person[i].y + person[i].size < blocks[j].y + blocks[j].height) || (person[i].x + person[i].size > blocks[j].x && person[i].x + person[i].size < blocks[j].x + blocks[j].width && person[i].y + person[i].size > blocks[j].y && person[i].y + person[i].size < blocks[j].y + blocks[j].height)){
                         if (up){
                             person[i].y += person[i].speed;
@@ -97,7 +97,7 @@ $(document).ready(function () {
                                 person[i].x -= person[i].speed;
                         }
                     }
-                }
+                }*/
 
                 if ((up || down || left || right) && !mouseDown){
                     io.emit("requestPositionUpdate", JSON.stringify({arr: person}));
