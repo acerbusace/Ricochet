@@ -61,53 +61,15 @@ $(document).ready(function () {
 
         for (var i in person){
             if (io.id == person[i].id && !mouseDown){
-                if (up){
-                    if (person[i].y - person[i].speed - person[i].size > 0){
-                        person[i].y -= person[i].speed;
-                    }
-                }
-                if (down){
-                    if (person[i].y + person[i].speed + person[i].size < canvas.height){
-                        person[i].y += person[i].speed;
-                    }
-                }
-                if (left){
-                    if (person[i].x - person[i].speed - person[i].size > 0){
-                        person[i].x -= person[i].speed;
-                    }
-                }
-                if (right){
-                    if (person[i].x + person[i].speed + person[i].size < canvas.width){
-                        person[i].x += person[i].speed;
-                    }
-                }
-
-                /*for (var j in blocks){
-                    if ((person[i].x - person[i].size > blocks[j].x && person[i].x - person[i].size < blocks[j].x + blocks[j].width && person[i].y - person[i].size > blocks[j].y && person[i].y - person[i].size < blocks[j].y + blocks[j].height) || (person[i].x + person[i].size > blocks[j].x && person[i].x + person[i].size < blocks[j].x + blocks[j].width && person[i].y - person[i].size > blocks[j].y && person[i].y - person[i].size < blocks[j].y + blocks[j].height) || (person[i].x - person[i].size > blocks[j].x && person[i].x - person[i].size < blocks[j].x + blocks[j].width && person[i].y + person[i].size > blocks[j].y && person[i].y + person[i].size < blocks[j].y + blocks[j].height) || (person[i].x + person[i].size > blocks[j].x && person[i].x + person[i].size < blocks[j].x + blocks[j].width && person[i].y + person[i].size > blocks[j].y && person[i].y + person[i].size < blocks[j].y + blocks[j].height)){
-                        if (up){
-                            person[i].y += person[i].speed;
-                        }
-                        if (down){
-                                person[i].y -= person[i].speed;
-                        }
-                        if (left){
-                                person[i].x += person[i].speed;
-                        }
-                        if (right){
-                                person[i].x -= person[i].speed;
-                        }
-                    }
-                }*/
-
-                if ((up || down || left || right) && !mouseDown){
-                    io.emit("requestPositionUpdate", JSON.stringify({arr: person}));
+                if (up || down || left || right){
+                    io.emit("requestPositionUpdate", JSON.stringify({up: this.up, down: this.down, left: this.left, right: this.right}));
                 } 
             }
         }
         
         if (mouseDown){
-            bulletS += 0.01;
-            bulletSS += 0.001;
+            bulletS += 0.02;
+            bulletSS += 0.005;
         }
         
 

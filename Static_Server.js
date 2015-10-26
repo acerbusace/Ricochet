@@ -13,9 +13,9 @@ var canvasWidth = 1600;
 var canvasHeight = 800;
 
 var person = [];
-person.push({id: "", name: "Unused", x: canvasWidth/4, y: canvasHeight/4, size: 25, speed: 8});
-person.push({id: "", name: "Unused", x: canvasWidth - canvasWidth/4, y: canvasHeight/4, size: 25, speed: 8});
-person.push({id: "", name: "Unused", x: canvasWidth - canvasWidth/4, y: canvasHeight - canvasHeight/4, size: 25, speed: 8});
+person.push({id: "", name: "Unused", x: canvasWidth/4, y: canvasHeight/4, size: 25, speed: 4.5});
+person.push({id: "", name: "Unused", x: canvasWidth - canvasWidth/4, y: canvasHeight/4, size: 25, speed: 4.5});
+person.push({id: "", name: "Unused", x: canvasWidth - canvasWidth/4, y: canvasHeight - canvasHeight/4, size: 25, speed: 4.5});
 
 var bullet = [];
 
@@ -131,7 +131,44 @@ io.on("connection", function(socket){
         var dataObj = JSON.parse(data);
         for (var i in person){
             if (socket.id == person[i].id){
-                person[i] = dataObj.arr[i];
+                if (dataObj.up){
+                    if (person[i].y - person[i].speed - person[i].size > 0){
+                        person[i].y -= person[i].speed;
+                    }
+                }
+                if (dataObj.down){
+                    if (person[i].y + person[i].speed + person[i].size < canvasHeight){
+                        person[i].y += person[i].speed;
+                    }
+                }
+                if (dataObj.left){
+                    if (person[i].x - person[i].speed - person[i].size > 0){
+                        person[i].x -= person[i].speed;
+                    }
+                }
+                if (dataObj.right){
+                    if (person[i].x + person[i].speed + person[i].size < canvasWidth){
+                        person[i].x += person[i].speed;
+                    }
+                }
+
+                for (var j in blocks){
+                    if ((person[i].x - person[i].size > blocks[j].x && person[i].x - person[i].size < blocks[j].x + blocks[j].width && person[i].y - person[i].size > blocks[j].y && person[i].y - person[i].size < blocks[j].y + blocks[j].height) || (person[i].x + person[i].size > blocks[j].x && person[i].x + person[i].size < blocks[j].x + blocks[j].width && person[i].y - person[i].size > blocks[j].y && person[i].y - person[i].size < blocks[j].y + blocks[j].height) || (person[i].x - person[i].size > blocks[j].x && person[i].x - person[i].size < blocks[j].x + blocks[j].width && person[i].y + person[i].size > blocks[j].y && person[i].y + person[i].size < blocks[j].y + blocks[j].height) || (person[i].x + person[i].size > blocks[j].x && person[i].x + person[i].size < blocks[j].x + blocks[j].width && person[i].y + person[i].size > blocks[j].y && person[i].y + person[i].size < blocks[j].y + blocks[j].height)){
+                        if (dataObj.up){
+                            person[i].y += person[i].speed;
+                        }
+                        if (dataObj.down){
+                                person[i].y -= person[i].speed;
+                        }
+                        if (dataObj.left){
+                                person[i].x += person[i].speed;
+                        }
+                        if (dataObj.right){
+                                person[i].x -= person[i].speed;
+                        }
+                    }
+                }
+                
 
                 io.emit("updatePosition", JSON.stringify({arr: person}));
             }
@@ -162,19 +199,19 @@ setInterval(function (){
         bullet[i].x += bullet[i].speedX;
         bullet[i].y += bullet[i].speedY;
 
-        if (bullet[i].x < 0 || bullet[i].x > canvasWidth){
+        if (bullet[i].x - bullet[i].size < 0 || bullet[i].x + bullet[i].size > canvasWidth){
             bullet[i].speedX = -(bullet[i].speedX);
         }
-        if (bullet[i].y < 0 || bullet[i].y > canvasHeight){
+        if (bullet[i].y - bullet[i].size < 0 || bullet[i].y + bullet[i].size > canvasHeight){
             bullet[i].speedY = -(bullet[i].speedY);
         }
 
         for (var j in blocks){
-            if (bullet[i].x > blocks[j].x && bullet[i].x < blocks[j].x + blocks[j].width && bullet[i].y > blocks[j].y && bullet[i].y < blocks[j].y + blocks[j].height){
-                if (Math.abs(bullet[i].x - blocks[j].x) <= Math.abs(bullet[i].speedX) || Math.abs(bullet[i].x - (blocks[j].x + blocks[j].width)) <= Math.abs(bullet[i].speedX)){
+            if ((bullet[i].x - bullet[i].size > blocks[j].x && bullet[i].x - bullet[i].size < blocks[j].x + blocks[j].width && bullet[i].y - bullet[i].size > blocks[j].y && bullet[i].y - bullet[i].size < blocks[j].y + blocks[j].height) || (bullet[i].x + bullet[i].size > blocks[j].x && bullet[i].x + bullet[i].size < blocks[j].x + blocks[j].width && bullet[i].y - bullet[i].size > blocks[j].y && bullet[i].y - bullet[i].size < blocks[j].y + blocks[j].height) || (bullet[i].x - bullet[i].size > blocks[j].x && bullet[i].x - bullet[i].size < blocks[j].x + blocks[j].width && bullet[i].y + bullet[i].size > blocks[j].y && bullet[i].y + bullet[i].size < blocks[j].y + blocks[j].height) || (bullet[i].x + bullet[i].size > blocks[j].x && bullet[i].x + bullet[i].size < blocks[j].x + blocks[j].width && bullet[i].y + bullet[i].size > blocks[j].y && bullet[i].y + bullet[i].size < blocks[j].y + blocks[j].height)){
+                if (Math.abs(bullet[i].x - blocks[j].x) <= Math.abs(bullet[i].speedX) + bullet[i].size || Math.abs(bullet[i].x - (blocks[j].x + blocks[j].width)) <= Math.abs(bullet[i].speedX) + bullet[i].size){
                     bullet[i].speedX = -(bullet[i].speedX);
                 }
-                if (Math.abs(bullet[i].y - blocks[j].y) < bullet[i].speedY || Math.abs(bullet[i].y - (blocks[j].y + blocks[j].height)) < Math.abs(bullet[i].speedY)){
+                if (Math.abs(bullet[i].y - blocks[j].y) <= Math.abs(bullet[i].speedY) + bullet[i].size || Math.abs(bullet[i].y - (blocks[j].y + blocks[j].height)) <= Math.abs(bullet[i].speedY) + bullet[i].size){
                     bullet[i].speedY = -(bullet[i].speedY);
                 }
             }
