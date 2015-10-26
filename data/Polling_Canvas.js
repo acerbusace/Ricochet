@@ -183,13 +183,7 @@ function draw(){                                                     // the func
         context.beginPath();
         context.arc(person[i].x, person[i].y, person[i].size, 0, Math.PI*2, true); 
         context.closePath();
-        if (i == 0){
-            context.fillStyle = 'rgb(255,0,0)';
-        } else if (i == 1){
-            context.fillStyle = 'rgb(0,255,0)';
-        } else if (i == 2){
-            context.fillStyle = 'rgb(0,0,255)';
-        }
+        context.fillStyle = person[i].color;
         context.fill();
         context.lineWidth = 3;
         context.strokeStyle = 'rgb(0,0,0)';
