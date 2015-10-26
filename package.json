@@ -1,0 +1,8 @@
+{
+  "name": "dependencies",
+  "version": "0.0.1",
+  "description": "Modules Required for Application",    
+  "dependencies": {
+    "socket.io": "~1.3.7"
+  }
+}

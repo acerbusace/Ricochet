@@ -1,0 +1,42 @@
+<html>
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Collabrative App!</title>
+        <script src="scripts/jquery-1.11.3.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+   <style> 
+         body {
+            background: #dddddd;
+         }
+		 
+		 /*element selectors: */
+		 canvas {
+		    margin: 20px;
+			/*important here for padding to be 0 for mouse calculations */
+            padding: 0px; 
+		 }
+		 /* class selectors: */
+		 .canvas {            
+            background: #ffffff;
+            border: thin inset #aaaaaa;
+         }
+
+         /*id selectors: */
+		 
+         #canvas1 {
+         }
+		  
+ 
+      </style>
+
+    </head>
+   
+    <body>
+        <canvas id="myCanvas" class='canvas' width="1600" height="800">
+        </canvas> <br />
+        <input type="text" id="name" name="name" value="Nickname" size="60">
+        <input type="text" id="controlName" name="controlName" value="Control Variable Name" size="60">
+        <input type="button" value="Assign Control" onClick="handleAssignButton()">
+        <script src="Polling_Canvas.js"></script>
+    </body>
+</html>
