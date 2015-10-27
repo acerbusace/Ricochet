@@ -13,9 +13,13 @@ var canvasWidth = 1600;
 var canvasHeight = 800;
 
 var person = [];
-person.push({id: "", name: "Unused", x: canvasWidth/4, y: canvasHeight/4, size: 20, speed: 5, color: "red"});
-person.push({id: "", name: "Unused", x: canvasWidth - canvasWidth/4, y: canvasHeight/4, size: 20, speed: 5, color: "green"});
-person.push({id: "", name: "Unused", x: canvasWidth - canvasWidth/4, y: canvasHeight - canvasHeight/4, size: 20, speed: 5, color: "blue"});
+person.push({id: "", name: "Unused", x: canvasWidth/2 - 100, y: 70, sX: canvasWidth/2 - 100, sY: 70, size: 20, speed: 5, color: "red"});
+person.push({id: "", name: "Unused", x: canvasWidth/2, y: 70, sX: canvasWidth/2, sY: 70, size: 20, speed: 5, color: "green"});
+person.push({id: "", name: "Unused", x: canvasWidth/2 + 100, y: 70, sX: canvasWidth/2 + 100, sY: 70, size: 20, speed: 5, color: "blue"});
+/*person.push({id: "", name: "Unused", x: canvasWidth/4, y: canvasHeight/4, sX: canvasWidth/2 - 100, sY: 100, size: 20, speed: 5, color: "red"});
+person.push({id: "", name: "Unused", x: canvasWidth - canvasWidth/4, y: canvasHeight/4, sX: canvasWidth/2, sY: 100, size: 20, speed: 5, color: "green"});
+person.push({id: "", name: "Unused", x: canvasWidth - canvasWidth/4, y: canvasHeight - canvasHeight/4, sX: canvasWidth/2 + 100, sY: 100, size: 20, speed: 5, color: "blue"});*/
+
 
 var bullet = [];
 
@@ -97,10 +101,14 @@ io.on("connection", function(socket){
                         if (socket.id == person[j].id){
                             person[j].id = "";
                             person[j].name = "Unused";
+                            person[j].x = person[j].sX; 
+                            person[j].y = person[j].sY;
                         }
                     }
                     person[i].id = socket.id;
                     person[i].name = dataObj.name;
+                    person[i].x = canvasWidth/4; 
+                    person[i].y = canvasHeight/4;
                 }
             }
         }
@@ -200,6 +208,8 @@ io.on("connection", function(socket){
             if (socket.id == person[i].id){
                 person[i].id = "";
                 person[i].name = "Unused";
+                person[i].x = person[i].sX; 
+                person[i].y = person[i].sY;
             }
         }
         io.emit("updateControl", JSON.stringify({arr: person}));
@@ -241,8 +251,8 @@ setInterval(function (){
 
                 person[i].id = "";
                 person[i].name = "Unused";
-                person[i].x = canvasWidth/4;
-                person[i].y = canvasHeight - canvasHeight/4;
+                person[i].x = person[i].sX; 
+                person[i].y = person[i].sY;
 
                 io.emit("updateControl", JSON.stringify({arr: person}));
             }
