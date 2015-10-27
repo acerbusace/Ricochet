@@ -125,12 +125,14 @@ function mouseMove(e){
 }
 
 function mouseUp(e){                                              // stops myWord to being set to what was previously clicked
-    for (var i in person){
-        if (io.id == person[i].id){
-            bullet.push({x: person[i].x, y: person[i].y, speedX: bulletSS*bulletSpeed*(mouseX - person[i].x)/(Math.sqrt(Math.pow(mouseX - person[i].x, 2) + Math.pow(mouseY - person[i].y, 2))), speedY: bulletSS*bulletSpeed*(mouseY - person[i].y)/(Math.sqrt(Math.pow(mouseX - person[i].x, 2) + Math.pow(mouseY - person[i].y, 2))), size: bulletS*5});
-            bullet[bullet.length-1].x += bullet[bullet.length-1].speedX*(person[i].size + bullet[bullet.length-1].size)/(Math.sqrt(Math.pow(bullet[bullet.length-1].speedX, 2) + Math.pow(bullet[bullet.length-1].speedY, 2)));
-            bullet[bullet.length-1].y += bullet[bullet.length-1].speedY*(person[i].size + bullet[bullet.length-1].size)/(Math.sqrt(Math.pow(bullet[bullet.length-1].speedX, 2) + Math.pow(bullet[bullet.length-1].speedY, 2)));
-            io.emit("requestBulletPositionUpdate", JSON.stringify({arr: bullet}));
+    if (mouseX > 0 && mouseY > 0){
+        for (var i in person){
+            if (io.id == person[i].id){
+                bullet.push({x: person[i].x, y: person[i].y, speedX: bulletSS*bulletSpeed*(mouseX - person[i].x)/(Math.sqrt(Math.pow(mouseX - person[i].x, 2) + Math.pow(mouseY - person[i].y, 2))), speedY: bulletSS*bulletSpeed*(mouseY - person[i].y)/(Math.sqrt(Math.pow(mouseX - person[i].x, 2) + Math.pow(mouseY - person[i].y, 2))), size: bulletS*5});
+                bullet[bullet.length-1].x += bullet[bullet.length-1].speedX*(person[i].size + bullet[bullet.length-1].size)/(Math.sqrt(Math.pow(bullet[bullet.length-1].speedX, 2) + Math.pow(bullet[bullet.length-1].speedY, 2)));
+                bullet[bullet.length-1].y += bullet[bullet.length-1].speedY*(person[i].size + bullet[bullet.length-1].size)/(Math.sqrt(Math.pow(bullet[bullet.length-1].speedX, 2) + Math.pow(bullet[bullet.length-1].speedY, 2)));
+                io.emit("requestBulletPositionUpdate", JSON.stringify({arr: bullet}));
+            }
         }
     }
     mouseDown = false;

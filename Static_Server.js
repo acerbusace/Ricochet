@@ -13,9 +13,9 @@ var canvasWidth = 1600;
 var canvasHeight = 800;
 
 var person = [];
-person.push({id: "", name: "Unused", x: canvasWidth/4, y: canvasHeight/4, size: 25, speed: 5, color: "red"});
-person.push({id: "", name: "Unused", x: canvasWidth - canvasWidth/4, y: canvasHeight/4, size: 25, speed: 5, color: "green"});
-person.push({id: "", name: "Unused", x: canvasWidth - canvasWidth/4, y: canvasHeight - canvasHeight/4, size: 25, speed: 5, color: "blue"});
+person.push({id: "", name: "Unused", x: canvasWidth/4, y: canvasHeight/4, size: 20, speed: 5, color: "red"});
+person.push({id: "", name: "Unused", x: canvasWidth - canvasWidth/4, y: canvasHeight/4, size: 20, speed: 5, color: "green"});
+person.push({id: "", name: "Unused", x: canvasWidth - canvasWidth/4, y: canvasHeight - canvasHeight/4, size: 20, speed: 5, color: "blue"});
 
 var bullet = [];
 
