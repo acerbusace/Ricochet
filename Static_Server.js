@@ -244,7 +244,7 @@ setInterval(function (){
                 person[i].x = canvasWidth/4;
                 person[i].y = canvasHeight - canvasHeight/4;
 
-                io.emit("updatePosition", JSON.stringify({arr: person}));
+                io.emit("updateControl", JSON.stringify({arr: person}));
             }
         }
     }

@@ -4,6 +4,8 @@ var mouseDown;
 var person;
 var bullet;
 var blocks;
+var shadow;
+var prevTime;
 
 var str;
 
@@ -30,6 +32,8 @@ $(document).ready(function () {
         bullet = dataObj.arrTwo;
         blocks = dataObj.arrThree;
     });
+    shadow = [];
+    prevTime = new Date().getTime();
 
     bulletSpeed = 3;
     bulletS = 1;
@@ -45,11 +49,20 @@ $(document).ready(function () {
     io.on("updateControl", function(data){
         var dataObj = JSON.parse(data);
         person = dataObj.arr;
+        for (var i in person){
+            if (io.id == person[i].id && shadow.length == 0){
+                shadow = [];
+                for(var j = 0; j < 5; j++){
+                    shadow.push({x: person[i].x, y: person[i].y, size: person[i].size});
+                }
+            }
+        }
     });
 
     io.on("updatePosition", function(data){
         var dataObj = JSON.parse(data);
         person = dataObj.arr;
+        
     });
 
     io.on("updateBulletPosition", function(data){
@@ -65,6 +78,20 @@ $(document).ready(function () {
                     io.emit("requestPositionUpdate", JSON.stringify({up: this.up, down: this.down, left: this.left, right: this.right}));
                 } 
             }
+        }
+
+        if (new Date().getTime() - prevTime > 25 && shadow.length != 0){
+            for (var i in person){
+                if (io.id == person[i].id){
+                    for(var j = 0; j < shadow.length - 1; j++){
+                        shadow[j].x = shadow[j+1].x;
+                        shadow[j].y = shadow[j+1].y;
+                    }
+                    shadow[shadow.length-1].x = person[i].x;
+                    shadow[shadow.length-1].y = person[i].y;
+                }
+            }
+            prevTime = new Date().getTime();
         }
         
         if (mouseDown){
@@ -177,6 +204,19 @@ function draw(){                                                     // the func
         context.lineWidth = 3;
         context.strokeStyle = 'rgb(0,0,0)';
         context.stroke(); 
+    }
+
+    var sDepth = 96;
+    for (var i in shadow){
+        context.beginPath();
+        context.arc(shadow[i].x, shadow[i].y, shadow[i].size, 0, Math.PI*2, true); 
+        context.closePath();
+        context.fillStyle = 'rgb('+sDepth+','+sDepth+','+sDepth+')';
+        context.fill();
+        //context.lineWidth = 2;
+        //context.strokeStyle = 'rgb(50,50,50)';
+        //context.stroke();
+        sDepth -= Math.round(96/shadow.length);
     }
 
     for (var i in person){
