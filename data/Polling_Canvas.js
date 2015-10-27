@@ -73,7 +73,7 @@ $(document).ready(function () {
     setInterval(function (){
 
         for (var i in person){
-            if (io.id == person[i].id && !mouseDown){
+            if (io.id == person[i].id && (!mouseDown || bulletS < 1.2)){
                 if (up || down || left || right){
                     io.emit("requestPositionUpdate", JSON.stringify({up: this.up, down: this.down, left: this.left, right: this.right}));
                 } 
@@ -128,10 +128,10 @@ function mouseUp(e){                                              // stops myWor
     if (mouseX > 0 && mouseY > 0){
         for (var i in person){
             if (io.id == person[i].id){
-                bullet.push({x: person[i].x, y: person[i].y, speedX: bulletSS*bulletSpeed*(mouseX - person[i].x)/(Math.sqrt(Math.pow(mouseX - person[i].x, 2) + Math.pow(mouseY - person[i].y, 2))), speedY: bulletSS*bulletSpeed*(mouseY - person[i].y)/(Math.sqrt(Math.pow(mouseX - person[i].x, 2) + Math.pow(mouseY - person[i].y, 2))), size: bulletS*5});
-                bullet[bullet.length-1].x += bullet[bullet.length-1].speedX*(person[i].size + bullet[bullet.length-1].size)/(Math.sqrt(Math.pow(bullet[bullet.length-1].speedX, 2) + Math.pow(bullet[bullet.length-1].speedY, 2)));
-                bullet[bullet.length-1].y += bullet[bullet.length-1].speedY*(person[i].size + bullet[bullet.length-1].size)/(Math.sqrt(Math.pow(bullet[bullet.length-1].speedX, 2) + Math.pow(bullet[bullet.length-1].speedY, 2)));
-                io.emit("requestBulletPositionUpdate", JSON.stringify({arr: bullet}));
+                var addBullet = {x: person[i].x, y: person[i].y, speedX: bulletSS*bulletSpeed*(mouseX - person[i].x)/(Math.sqrt(Math.pow(mouseX - person[i].x, 2) + Math.pow(mouseY - person[i].y, 2))), speedY: bulletSS*bulletSpeed*(mouseY - person[i].y)/(Math.sqrt(Math.pow(mouseX - person[i].x, 2) + Math.pow(mouseY - person[i].y, 2))), size: bulletS*5}
+                addBullet.x += addBullet.speedX*(person[i].size + addBullet.size)/(Math.sqrt(Math.pow(addBullet.speedX, 2) + Math.pow(addBullet.speedY, 2)));
+                addBullet.y += addBullet.speedY*(person[i].size + addBullet.size)/(Math.sqrt(Math.pow(addBullet.speedX, 2) + Math.pow(addBullet.speedY, 2)));
+                io.emit("requestBulletPositionUpdate", JSON.stringify(addBullet));
             }
         }
     }

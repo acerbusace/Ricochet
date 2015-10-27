@@ -191,7 +191,7 @@ io.on("connection", function(socket){
 
     socket.on("requestBulletPositionUpdate", function(data){
         var dataObj = JSON.parse(data);
-        bullet = dataObj.arr;
+        bullet.push(dataObj);
     });
 
 
