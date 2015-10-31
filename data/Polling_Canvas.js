@@ -39,7 +39,7 @@ $(document).ready(function () {
     bulletSpeed = 3;
     bulletS = 1;
     bulletSS = 1;
-    str = "nothing";
+    str = "";
     fps = 0;
 
     up = false;
@@ -139,7 +139,7 @@ $(document).ready(function () {
             prevTime = new Date().getTime();
         }
         
-        if (mouseDown && bulletS < 30){
+        if (mouseDown && bulletS < 7){
             bulletS += 0.02;
             bulletSS += 0.005;
         }
