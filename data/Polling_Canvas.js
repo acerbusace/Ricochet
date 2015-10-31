@@ -8,6 +8,7 @@ var shadow;
 var prevTime;
 
 var str;
+var fps;
 
 $(document).ready(function () {
     io = io();
@@ -39,6 +40,7 @@ $(document).ready(function () {
     bulletS = 1;
     bulletSS = 1;
     str = "nothing";
+    fps = 0;
 
     up = false;
     down = false;
@@ -70,8 +72,51 @@ $(document).ready(function () {
         bullet = dataObj.arr;
     });
 
+    lastTime = new Date().getTime();
+    msPerCalc = 1000 / 60;
+
+    calcs = 0;
+    frames = 0;
+
+    lastTimer = new Date().getTime();
+    delta = 0;
+
     setInterval(function (){
 
+        now = new Date().getTime();
+        delta += (now - lastTime) / msPerCalc;
+        lastTime = now;
+
+        shouldRender = false;
+
+        while (delta >= 1){
+            calcs++;
+
+            //Program's Logic
+            update();
+
+            delta -= 1;
+            shouldRender = true;
+        }
+
+        if (shouldRender){
+            frames++;
+
+            draw();
+        }
+
+        if ((new Date().getTime() - lastTimer) > 1000)
+        {
+            lastTimer += 1000;
+            console.log("FPS: " + calcs);
+            fps = calcs;
+            frames = 0;
+            calcs = 0;
+        }
+
+    }, 2);
+
+    function update(){
         for (var i in person){
             if (io.id == person[i].id && (!mouseDown || bulletS < 1.2)){
                 if (up || down || left || right){
@@ -98,10 +143,7 @@ $(document).ready(function () {
             bulletS += 0.02;
             bulletSS += 0.005;
         }
-        
-
-        draw();
-    }, 17);
+    }
 
 });
 
@@ -196,8 +238,9 @@ function draw(){                                                     // the func
 
     
 
-    context.fillText(mouseX + ", " + mouseY, 0, fontSize);
-    context.fillText(str, 0, fontSize*2);
+    context.fillText("Mouse X: " + mouseX + ", Mouse Y: " + mouseY, 0, fontSize);
+    context.fillText(fps, 0, fontSize*2);
+    context.fillText(str, 0, fontSize*3);
 
     for (var i in blocks){
         context.rect(blocks[i].x, blocks[i].y, blocks[i].width, blocks[i].height);

@@ -217,8 +217,46 @@ io.on("connection", function(socket){
     });
 });
 
+lastTime = new Date().getTime();
+msPerCalc = 1000 / 60;
+
+calcs = 0;
+frames = 0;
+
+lastTimer = new Date().getTime();
+delta = 0;
+
 setInterval(function (){
 
+    now = new Date().getTime();
+    delta += (now - lastTime) / msPerCalc;
+    lastTime = now;
+
+
+    while (delta >= 1)
+    {
+        calcs++;
+
+        //Program's Logic
+        update();
+
+        delta -= 1;
+    }
+
+    if ((new Date().getTime() - lastTimer) > 1000)
+    {
+        lastTimer += 1000;
+        //console.log("FPS: " + calcs);
+        frames = 0;
+        calcs = 0;
+    }
+
+}, 2);
+
+
+      
+
+function update(){
     for (var i in bullet){
         bullet[i].x += bullet[i].speedX;
         bullet[i].y += bullet[i].speedY;
@@ -260,7 +298,7 @@ setInterval(function (){
     }
 
     io.emit("updateBulletPosition", JSON.stringify({arr: bullet}));
+}
 
-}, 17);
 
 console.log('Sever has been created at Port 3000. Press CRL-C to exit.');
