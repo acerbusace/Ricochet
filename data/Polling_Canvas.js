@@ -139,7 +139,7 @@ $(document).ready(function () {
             prevTime = new Date().getTime();
         }
         
-        if (mouseDown){
+        if (mouseDown && bulletS < 30){
             bulletS += 0.02;
             bulletSS += 0.005;
         }
@@ -174,6 +174,7 @@ function mouseUp(e){                                              // stops myWor
                 addBullet.x += addBullet.speedX*(person[i].size + addBullet.size)/(Math.sqrt(Math.pow(addBullet.speedX, 2) + Math.pow(addBullet.speedY, 2)));
                 addBullet.y += addBullet.speedY*(person[i].size + addBullet.size)/(Math.sqrt(Math.pow(addBullet.speedX, 2) + Math.pow(addBullet.speedY, 2)));
                 io.emit("requestBulletPositionUpdate", JSON.stringify(addBullet));
+                str = "Bullet Shot";
             }
         }
     }
@@ -233,13 +234,13 @@ function handleAssignButton(){                                     // gets the t
 function draw(){                                                     // the function that draws the frames and canvas and words, and practically everything on screen 
     var context = canvas.getContext('2d');
     context.font = '20pt Arial';
-    context.fillStyle = 'rgb(255,0,0)';
+    context.fillStyle = 'rgb(0,255,0)';
     context.clearRect(0, 0, canvas.width, canvas.height);
 
     
 
     context.fillText("Mouse X: " + mouseX + ", Mouse Y: " + mouseY, 0, fontSize);
-    context.fillText(fps, 0, fontSize*2);
+    context.fillText("FPS: " + fps, 0, fontSize*2);
     context.fillText(str, 0, fontSize*3);
 
     for (var i in blocks){
