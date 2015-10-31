@@ -139,7 +139,7 @@ $(document).ready(function () {
             prevTime = new Date().getTime();
         }
         
-        if (mouseDown && bulletS < 7){
+        if (mouseDown && bulletS < 5){
             bulletS += 0.02;
             bulletSS += 0.005;
         }
