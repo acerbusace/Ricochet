@@ -4,7 +4,7 @@ Alex Patel
 
 Description
 -----------
-Game made using JavaScript and deployed on Heroku.
+Mini JavaScript game based on ricocheting bullet and deployed on Heroku.
 
 Instructions 
 ------------
